@@ -1,6 +1,7 @@
 import { useFrame, Canvas } from '@react-three/fiber';
 import { Sparkles, OrbitControls } from '@react-three/drei';
 import { useRef } from 'react';
+import Ayam from './Ayam';
 
 const RotatingCube = () => {
   const meshRef = useRef();
@@ -30,19 +31,12 @@ const RotatingCube = () => {
 
 function Example() {
   return (
-    <Canvas
-      style={{
-        height: '100vh',
-        width: '100vw',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <Canvas className='h-screen w-screen flex justify-center items-center'>
       <OrbitControls enablePan enableZoom enableRotate />
-      <directionalLight position={[1, 1, 1]} intensity={10} color={0x9cdba6} />
+      <directionalLight position={[1, 1, 1]} intensity={10} color={0xffffff} />
       <color attach='background' args={['#f0f0f0']} />
-      <RotatingCube />
+      {/* <RotatingCube /> */}
+      <Ayam />
     </Canvas>
   );
 }
