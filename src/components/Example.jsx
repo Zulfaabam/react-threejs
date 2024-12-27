@@ -1,7 +1,8 @@
-import { useFrame, Canvas } from '@react-three/fiber';
+import { useFrame, Canvas, useLoader } from '@react-three/fiber';
 import { Sparkles, OrbitControls } from '@react-three/drei';
 import { useRef } from 'react';
 import Ayam from './Ayam';
+import { TextureLoader } from 'three';
 
 const RotatingCube = () => {
   const meshRef = useRef();
@@ -29,14 +30,39 @@ const RotatingCube = () => {
   );
 };
 
+function ImageFrame({ image, position, onClick }) {
+  const texture = useLoader(TextureLoader, image);
+
+  return (
+    <mesh position={position} onClick={() => onClick(image)}>
+      <planeGeometry args={[1, 1.5]} />
+      <meshStandardMaterial map={texture} />
+    </mesh>
+  );
+}
+
 function Example() {
+  const images = [
+    '/assets/images/image.jpg',
+    '/assets/images/image.jpg',
+    '/assets/images/image.jpg',
+  ];
+
   return (
     <Canvas className='h-screen w-screen flex justify-center items-center'>
       <OrbitControls enablePan enableZoom enableRotate />
       <directionalLight position={[1, 1, 1]} intensity={10} color={0xffffff} />
       <color attach='background' args={['#f0f0f0']} />
       {/* <RotatingCube /> */}
-      <Ayam />
+      {/* <Ayam /> */}
+      {images.map((img, index) => (
+        <ImageFrame
+          key={index}
+          image={img}
+          position={[index * 1.5, 0, 0]}
+          onClick={(img) => console.log(img)}
+        />
+      ))}
     </Canvas>
   );
 }
